@@ -1,0 +1,13 @@
+﻿@model IEnumerable<BizConnect.WebApp.Models.Invoice.ClientModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Client</h2>
+<ul>
+@foreach (var l in Model)
+{
+    <li><label layoutid="@l.Id">@l.Name</label></li>
+}
+</ul>

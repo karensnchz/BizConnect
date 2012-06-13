@@ -1,0 +1,6 @@
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp.Tests\bin\Debug\BizConnect.WebApp.Tests.dll.config
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp.Tests\bin\Debug\BizConnect.WebApp.Tests.dll
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp.Tests\bin\Debug\BizConnect.WebApp.Tests.pdb
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp.Tests\obj\Debug\BizConnect.WebApp.Tests.dll
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp.Tests\obj\Debug\BizConnect.WebApp.Tests.pdb

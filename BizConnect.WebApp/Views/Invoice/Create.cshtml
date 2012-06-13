@@ -1,0 +1,55 @@
+﻿@model IEnumerable<BizConnect.Data.Entities.Layout>
+@{
+    ViewBag.Title = "Create";
+}
+<h2>Create</h2>
+
+<fieldset>
+    <legend>Invoice</legend>
+    <table id="index">
+        <thead>
+            <tr>
+                <th>Layout Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var l in Model)
+            {
+                <tr>
+                    <td>
+                        @l.Name
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div id="layout"/>
+    
+    
+    <p>
+        <input type="submit" value="Create" />
+    </p>
+</fieldset>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $('#layouts').dataTable({
+                "bPaginate": true,
+                "bLengthChange": true,
+                "bFilter": true,
+                "bSort": true,
+                "bInfo": false,
+                "bAutoWidth": false
+            });
+        });
+        
+
+    </script>
+}

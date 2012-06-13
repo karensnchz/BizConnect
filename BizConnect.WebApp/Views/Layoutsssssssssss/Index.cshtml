@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BizConnect.Data.Entities.Layout>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Disabled
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Disabled)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.LayoutId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LayoutId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LayoutId })
+        </td>
+    </tr>
+}
+
+</table>

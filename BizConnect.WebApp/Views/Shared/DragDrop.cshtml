@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "DragDrop";
+}
+<h2>
+    DragDrop</h2>
+@using (@Html.BeginForm("DragDrop", "Invoice"))
+{
+    <script src="http://html5demos.com/h5utils.js"></script>
+        
+    <div>
+        <ol>
+            <li><a id="Text" href="#">@Html.TextBox("TextBox")</a></li>
+            <li><a id="Phone" href="#">@Html.TextBox("PhoneNumberBox")</a></li>
+            <li><a id="Email" href="#">@Html.TextBox("EmailBox")</a></li>
+            <li><a id="Date" href="#">@Html.TextBox("DateBox")</a></li>
+            <li><a id="Currency" href="#">@Html.TextBox("CurrencyBox")</a></li>
+            <li><a id="Number" href="#">@Html.TextBox("NumberBox")</a></li>
+        </ol>
+    </div>
+    
+    <div id="Layout">
+    </div>
+
+    <script type="text/javascript">
+        //            var test = document.createElement('copy');
+        //            var items = document.querySelectorAll('li > a'), el = null;
+
+        //            for (var i = 0; i < items.length; i++) {
+        //                el = test[i];
+        //            }
+
+        var drop = document.querySelector('#drop'); // returns the 1st result only
+
+        addEvent(Layout,'dragover',cancel);
+        addEvent(Layout, 'dragenter', cancel);
+
+        addEvent(Layout, 'drop', function (event) {
+            if (event.preventDefault) {
+                event.preventDefault();
+            }
+
+            this.innerHTML += '<p>' + event.dataTransfer.getData('Text') + '</p>';
+            return false;
+        });
+
+        function cancel(event) {
+            if (event.preventDefault) {
+                event.preventDefault();
+            }
+            return false;
+        }
+
+
+
+
+
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    @Html.Label("Label")
+
+
+}
