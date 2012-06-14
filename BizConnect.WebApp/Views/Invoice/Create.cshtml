@@ -1,0 +1,53 @@
+﻿@model BizConnect.WebApp.Models.Invoice.InvoiceModel
+@{
+    ViewBag.Title = "Create";
+}
+<h2>Create</h2>
+
+<fieldset>
+    <legend>Invoice</legend>
+    <table id="index">
+        <thead>
+            <tr>
+                <th>Layout Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var l in Model.Layouts)
+            {
+                <tr data-company="@l.Company.CompanyId">
+                    <td>
+                        @l.Name
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <span id="loadlayout" />
+    
+    
+    <p>
+        <input type="submit" value="Create" />
+    </p>
+</fieldset>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $('#layouts').dataTable({
+                "bPaginate": true,
+                "bLengthChange": true,
+                "bFilter": true,
+                "bSort": true,
+                "bInfo": false,
+                "bAutoWidth": false
+            });
+        });
+    </script>
+}

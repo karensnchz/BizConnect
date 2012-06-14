@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BizConnectModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="BizConnectModelStoreContainer">
+    <EntitySet Name="Clients" EntityType="BizConnectModel.Store.Clients" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Companies" EntityType="BizConnectModel.Store.Companies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InvoiceDatas" EntityType="BizConnectModel.Store.InvoiceDatas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Invoices" EntityType="BizConnectModel.Store.Invoices" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Layouts" EntityType="BizConnectModel.Store.Layouts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CompanyClient" EntityType="BizConnectModel.Store.CompanyClient" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_ClientInvoice" Association="BizConnectModel.Store.FK_ClientInvoice">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Invoice" EntitySet="Invoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CompanyLayout" Association="BizConnectModel.Store.FK_CompanyLayout">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Layout" EntitySet="Layouts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CompanyClient_Client" Association="BizConnectModel.Store.FK_CompanyClient_Client">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="CompanyClient" EntitySet="CompanyClient" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CompanyClient_Company" Association="BizConnectModel.Store.FK_CompanyClient_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="CompanyClient" EntitySet="CompanyClient" />
+    </AssociationSet>
+    <AssociationSet Name="InvoiceInvoiceData" Association="BizConnectModel.Store.InvoiceInvoiceData">
+      <End Role="Invoice" EntitySet="Invoices" />
+      <End Role="InvoiceData" EntitySet="InvoiceDatas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Telephone" Type="nchar" Nullable="false" MaxLength="10" />
+    <Property Name="Cell_Phone" Type="nchar" Nullable="true" MaxLength="10" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Birthday" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Companies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Telephone" Type="nchar" Nullable="false" MaxLength="10" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="InvoiceDatas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="Labor" Type="decimal" Nullable="false" Precision="19" Scale="2" />
+    <Property Name="Tax" Type="decimal" Nullable="false" Precision="19" Scale="2" />
+    <Property Name="Total" Type="decimal" Nullable="false" Precision="19" Scale="2" />
+    <Property Name="Invoice_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Invoices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Payment_Status" Type="bit" Nullable="false" />
+    <Property Name="Total" Type="int" Nullable="false" />
+    <Property Name="Client_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Layouts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Elements" Type="varbinary(max)" Nullable="false" />
+    <Property Name="Company_Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CompanyClient">
+    <Key>
+      <PropertyRef Name="Clients_Id" />
+      <PropertyRef Name="Companies_Id" />
+    </Key>
+    <Property Name="Clients_Id" Type="int" Nullable="false" />
+    <Property Name="Companies_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ClientInvoice">
+    <End Role="Client" Type="BizConnectModel.Store.Clients" Multiplicity="1" />
+    <End Role="Invoice" Type="BizConnectModel.Store.Invoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="Client_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CompanyLayout">
+    <End Role="Company" Type="BizConnectModel.Store.Companies" Multiplicity="1" />
+    <End Role="Layout" Type="BizConnectModel.Store.Layouts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Layout">
+        <PropertyRef Name="Company_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="InvoiceInvoiceData">
+    <End Role="Invoice" Type="BizConnectModel.Store.Invoices" Multiplicity="1" />
+    <End Role="InvoiceData" Type="BizConnectModel.Store.InvoiceDatas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoice">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InvoiceData">
+        <PropertyRef Name="Invoice_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CompanyClient_Client">
+    <End Role="Client" Type="BizConnectModel.Store.Clients" Multiplicity="1" />
+    <End Role="CompanyClient" Type="BizConnectModel.Store.CompanyClient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CompanyClient">
+        <PropertyRef Name="Clients_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CompanyClient_Company">
+    <End Role="CompanyClient" Type="BizConnectModel.Store.CompanyClient" Multiplicity="*" />
+    <End Role="Company" Type="BizConnectModel.Store.Companies" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CompanyClient">
+        <PropertyRef Name="Companies_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BizConnectModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="BizConnectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="BizConnectModel.Client" />
+          <EntitySet Name="Companies" EntityType="BizConnectModel.Company" />
+          <EntitySet Name="InvoiceDatas" EntityType="BizConnectModel.InvoiceData" />
+          <EntitySet Name="Invoices" EntityType="BizConnectModel.Invoice" />
+          <EntitySet Name="Layouts" EntityType="BizConnectModel.Layout" />
+          <AssociationSet Name="FK_ClientInvoice" Association="BizConnectModel.FK_ClientInvoice">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyLayout" Association="BizConnectModel.FK_CompanyLayout">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Layout" EntitySet="Layouts" />
+          </AssociationSet>
+          <AssociationSet Name="CompanyClient" Association="BizConnectModel.CompanyClient">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Company" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="InvoiceInvoiceData" Association="BizConnectModel.InvoiceInvoiceData">
+            <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="InvoiceData" EntitySet="InvoiceDatas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Telephone" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="Cell_Phone" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Birthday" Nullable="false" />
+          <NavigationProperty Name="Invoices" Relationship="BizConnectModel.FK_ClientInvoice" FromRole="Client" ToRole="Invoice" />
+          <NavigationProperty Name="Companies" Relationship="BizConnectModel.CompanyClient" FromRole="Client" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Telephone" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Layouts" Relationship="BizConnectModel.FK_CompanyLayout" FromRole="Company" ToRole="Layout" />
+          <NavigationProperty Name="Clients" Relationship="BizConnectModel.CompanyClient" FromRole="Company" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="InvoiceData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Labor" Nullable="false" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="Tax" Nullable="false" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="Total" Nullable="false" Precision="19" Scale="2" />
+          <NavigationProperty Name="Invoice" Relationship="BizConnectModel.InvoiceInvoiceData" FromRole="InvoiceData" ToRole="Invoice" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Boolean" Name="Payment_Status" Nullable="false" />
+          <Property Type="Int32" Name="Total" Nullable="false" />
+          <Property Type="Int32" Name="Client_Id" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="BizConnectModel.FK_ClientInvoice" FromRole="Invoice" ToRole="Client" />
+          <NavigationProperty Name="InvoiceDatas" Relationship="BizConnectModel.InvoiceInvoiceData" FromRole="Invoice" ToRole="InvoiceData" />
+        </EntityType>
+        <EntityType Name="Layout">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Binary" Name="Elements" Nullable="false" MaxLength="Max" />
+          <Property Type="Int32" Name="Company_Id" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="BizConnectModel.FK_CompanyLayout" FromRole="Layout" ToRole="Company" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_ClientInvoice">
+          <End Type="BizConnectModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="BizConnectModel.Invoice" Role="Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="Client_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyLayout">
+          <End Type="BizConnectModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="BizConnectModel.Layout" Role="Layout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Layout">
+              <PropertyRef Name="Company_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CompanyClient">
+          <End Type="BizConnectModel.Client" Role="Client" Multiplicity="*" />
+          <End Type="BizConnectModel.Company" Role="Company" Multiplicity="*" />
+        </Association>
+        <Association Name="InvoiceInvoiceData">
+          <End Type="BizConnectModel.Invoice" Role="Invoice" Multiplicity="1" />
+          <End Type="BizConnectModel.InvoiceData" Role="InvoiceData" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BizConnectModelStoreContainer" CdmEntityContainer="BizConnectEntities">
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="IsTypeOf(BizConnectModel.Client)">
+        <MappingFragment StoreEntitySet="Clients">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Cell_Phone" ColumnName="Cell_Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="IsTypeOf(BizConnectModel.Company)">
+        <MappingFragment StoreEntitySet="Companies">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvoiceDatas">
+      <EntityTypeMapping TypeName="IsTypeOf(BizConnectModel.InvoiceData)">
+        <MappingFragment StoreEntitySet="InvoiceDatas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Labor" ColumnName="Labor" />
+          <ScalarProperty Name="Tax" ColumnName="Tax" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="IsTypeOf(BizConnectModel.Invoice)">
+        <MappingFragment StoreEntitySet="Invoices">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Payment_Status" ColumnName="Payment_Status" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Client_Id" ColumnName="Client_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Layouts">
+      <EntityTypeMapping TypeName="IsTypeOf(BizConnectModel.Layout)">
+        <MappingFragment StoreEntitySet="Layouts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Elements" ColumnName="Elements" />
+          <ScalarProperty Name="Company_Id" ColumnName="Company_Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CompanyClient" TypeName="BizConnectModel.CompanyClient" StoreEntitySet="CompanyClient">
+      <EndProperty Name="Client">
+        <ScalarProperty Name="Id" ColumnName="Clients_Id" />
+      </EndProperty>
+      <EndProperty Name="Company">
+        <ScalarProperty Name="Id" ColumnName="Companies_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="InvoiceInvoiceData" TypeName="BizConnectModel.InvoiceInvoiceData" StoreEntitySet="InvoiceDatas">
+      <EndProperty Name="Invoice">
+        <ScalarProperty Name="Id" ColumnName="Invoice_Id" />
+      </EndProperty>
+      <EndProperty Name="InvoiceData">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="BizConnect">
+        <EntityTypeShape EntityType="BizConnectModel.Client" Width="1.5" PointX="0.75" PointY="2.25" Height="2.7494921875" />
+        <EntityTypeShape EntityType="BizConnectModel.Company" Width="1.5" PointX="3" PointY="1.125" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="BizConnectModel.InvoiceData" Width="1.5" PointX="5.375" PointY="4.25" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="BizConnectModel.Invoice" Width="1.5" PointX="3" PointY="4.25" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="BizConnectModel.Layout" Width="1.5" PointX="5.375" PointY="1.125" Height="1.9802864583333339" />
+        <AssociationConnector Association="BizConnectModel.FK_ClientInvoice" >
+          <ConnectorPoint PointX="2.25" PointY="4.62474609375" />
+          <ConnectorPoint PointX="3" PointY="4.62474609375" />
+        </AssociationConnector>
+        <AssociationConnector Association="BizConnectModel.FK_CompanyLayout" >
+          <ConnectorPoint PointX="4.5" PointY="2.1151432291666667" />
+          <ConnectorPoint PointX="5.375" PointY="2.1151432291666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="BizConnectModel.CompanyClient" >
+          <ConnectorPoint PointX="2.25" PointY="2.8699446614583337" />
+          <ConnectorPoint PointX="3" PointY="2.8699446614583337" />
+        </AssociationConnector>
+        <AssociationConnector Association="BizConnectModel.InvoiceInvoiceData">
+          <ConnectorPoint PointX="4.5" PointY="5.3362939453125" />
+          <ConnectorPoint PointX="5.375" PointY="5.3362939453125" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

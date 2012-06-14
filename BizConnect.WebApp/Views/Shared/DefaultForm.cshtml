@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "DefaultForm";
+}
+<h2>
+    DefaultForm</h2>
+@using (@Html.BeginForm("Save", "Invoice"))
+{ 
+    @Html.Label("Payment Status")
+    @Html.DropDownList("PaymentStatus", "Payed");
+    
+    @Html.Label("Name")
+    @Html.TextBox("Name")
+                       
+    @Html.Label("Address")
+    @Html.TextBox("Address")
+
+    @Html.Label("Phone Number")
+    @Html.TextBox("PhoneNumber")
+
+    @Html.Label("Cell")
+    @Html.TextBox("Cell")
+
+    @Html.Label("Email")
+    @Html.TextBox("Email")
+
+    @Html.Label("Birthday")
+    @Html.TextBox("Birthday")
+
+   @* @Html.DropDownList("Day", "01")
+    @Html.DropDownList("Month", "01")
+    @Html.DropDownList("Year", "1900")*@
+
+    <table>
+        <tr>
+            <th>@Html.Label("Description")</th>
+            <th>@Html.Label("Parts")</th>
+            <th>@Html.Label("Labor")</th>
+            <th>@Html.Label("Tax")</th>
+            <th>@Html.Label("Subtotal")</th>            
+        </tr>
+        <tr>
+            <td>@Html.TextBox("Description")</td>
+            <td>@Html.TextBox("Parts")</td>
+            <td>@Html.TextBox("Labor")</td>
+            <td>@Html.TextBox("Tax")</td>
+            <td>@Html.TextBox("Subtotal")</td>
+        </tr>
+    </table>
+
+    @Html.Label("Total")
+    @Html.TextBox("Total")
+}

@@ -1,0 +1,327 @@
+﻿@using BizConnect.WebApp.Models
+@model LayoutModel
+@{
+	ViewBag.Title = Model.OperationType;
+	bool editable = Model.OperationType == OperationType.Create || Model.OperationType == OperationType.Edit;
+}
+@section styles
+{
+	<link href="@Url.Content("/Content/themes/base/jquery.ui.all.css")" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		#layout .wrapper
+		{
+			padding: 7px;
+			border: 2px solid blue;
+			margin: 10px;
+		}
+		
+		#layout
+		{
+			height: 800px;
+		}
+		
+		#layout .ui-selecting
+		{
+			background: #FECA40;
+		}
+		#layout .ui-selected
+		{
+			background: #F39814;
+			color: white;
+		}
+	</style>
+}
+<h2>@Model.OperationType Layout</h2>
+<div id="message" />
+@if (editable)
+{
+	<fieldset>
+		<legend>Toolbox</legend>
+		<div id="dropElements">
+			<input data-element-type="text" class="element" type="text" value="Text" readonly="readonly" />
+			<input data-element-type="phone" class="element" type="text" value="000-000-0000"
+				readonly="readonly" />
+			<input data-element-type="email" class="element" type="text" value="xxxxx@xxxx" readonly="readonly" />
+			<input data-element-type="date" class="element" type="text" value="MM/DD/YYYY" readonly="readonly" />
+			<input data-element-type="currency" class="element" type="text" value="$00.00" readonly="readonly" />
+			<input data-element-type="number" class="element" type="text" value="12345" readonly="readonly" />
+			<span data-element-type="boolean" class="element" style="border: solid 1px">
+				<input type="checkbox" name="check" />
+				<label for="check">Checkbox</label>
+			</span>
+			<img alt="table" data-element-type="table" class="element" src="../../Content/Table.PNG"
+				style="width: 25px; height: 25px;" />
+		</div>
+		<input id="reset" type="button" value="Reset" />
+	</fieldset>
+}
+<div class="editor-label">
+    @Html.LabelFor(model => model.Layout.Name)
+</div>
+<div class="editor-field">
+    <input id="layoutName" type="text" value="@(Model.Layout.Name ?? "")" @(editable ? "" : "disabled") />
+    @if (editable && Roles.IsUserInRole("Owner"))
+    {
+        <select id="companies">
+            @foreach (var company in Model.Companies)
+            {
+                <option data-company-id="@company.CompanyId" @(company.Equals(Model.Layout.Company) ? "selected" : "")>@company.Name</option>
+            }
+        </select>
+    }
+</div>
+<div id="message" />
+
+@Html.Partial("Test", Model.Layout)
+
+<div id="table-form" title="Create table">
+	<p class="validateTips">Specify how many columns and rows you want.</p>
+	<fieldset>
+		<label for="column">Column</label>
+		<input type="text" name="column" id="column" class="text ui-widget-content ui-corner-all" />
+		<label for="row">Row</label>
+		<input type="text" name="row" id="row" value="" class="text ui-widget-content ui-corner-all" />
+	</fieldset>
+</div>
+<div>
+	<input id="submit" type="button" value="@Model.OperationType" />
+</div>
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+@section scripts
+{
+	<script src="@Url.Content("~/Scripts/jquery-ui-1.8.20.min.js")" type="text/javascript"> </script>
+	@*    <script src="@Url.Content("~/Scripts/DataTables-1.9.1/media/js/jquery.dataTables.min.js")" type="text/javascript"> </script>*@
+	<script type="text/javascript">
+		$(function () {
+
+			var eLeft, eTop;
+			$('#table-form').dialog({
+				autoOpen: false,
+				height: 300,
+				width: 350,
+				modal: true,
+				buttons: {
+					"Create Table": function () {
+						var column = $('#column').val();
+						var row = $("#row").val();
+
+						var table = $('<table class="ui-selectee element wrapper table" data-element-type="table">');
+						var th = $('<thead></thead>').appendTo(table);
+						var tr = $('<tr></tr>').height(23).appendTo(th);
+						
+						for (var c = 0; c < column; c++) {
+							tr.append('<th><input type="text" class="cellTable"/></th>');
+						}
+						var tb = $('<tbody></tbody>').appendTo(table);
+						for (var r = 0; r < row; r++) {
+							tr = $('<tr></tr>').appendTo(tb);
+							for (c = 0; c < column; c++) {
+								tr.append('<td></td>');
+							}
+						}
+						
+//						table;
+
+					    table.appendTo('#layout').draggable({containment: '#layout'}).resizable()
+    					    .position({
+    					        my: 'left top',
+    					        at: 'left top',
+    					        of: $('#layout'),
+    					        offset: eLeft + " " + eTop
+    					    })
+    					    .dataTable({
+    					        "bPaginate": false,
+    					        "bLengthChange": false,
+    					        "bFilter": false,
+    					        "bSort": false,
+    					        "bInfo": false,
+    					        "bAutoWidth": true
+    					    }).makeAbsolute();
+						
+						$(this).dialog("close");
+					},
+					Cancel: function () {
+						$(this).dialog("close");
+					}
+				},
+				close: function () {
+					$('#column').val(""),
+					$("#row").val("");
+				}
+			});
+			
+			//Save Layout Button
+			$("#submit").click(function() {
+
+				var elements =
+					$('#layout .element')
+						.map(function() {
+							var name = '';
+							var dataType = $(this).data('elementType');
+							if (dataType === 'boolean') {
+								name = $(this).find(':text').val();
+							} 
+							else if (dataType === 'table') {
+								var columns = $(this).find('th :text').each(function() {
+									name += $(this).val() + '♠'; 
+								}).length;
+								name = name.slice(0, -1);
+								var rows = $(this).find('tbody > tr').length;
+							}
+							else {
+								name = $(this).val();
+							}
+							var o = $(this).closest('.wrapper').offset();
+							return {
+								ElementId: $(this).data("elementId"),
+								Name: name,
+								XPosition: o.left,
+								YPosition: o.top,
+								Width: $(this).outerWidth(),
+								Height: $(this).outerHeight(),
+								ElementType: dataType,
+								Rows: rows,
+								Columns: columns
+							};
+						}).get();
+
+				var viewModel = { LayoutId: @Model.Layout.LayoutId, Name: $("#layoutName").val(), Elements: elements, Disabled: false, CompanyId: $('#companies :selected').data('companyId') };
+
+				$.ajax({
+					type: "POST",
+					url: "@Url.Action(Model.OperationType.ToString())",
+					contentType: 'application/json',
+					traditional: true,
+					data: JSON.stringify(viewModel),
+					success: function(data) {
+						$("#message").html(data.message);
+						$('html').scrollTop(0);
+					
+					}
+				});
+
+			});
+
+		});
+	</script>
+	@if (editable)
+	{
+		<script type="text/javascript">
+
+		    $(function () {
+
+		        $('.wrapper').draggable({ containment: '#layout' }).addClass('ui-selectee');
+
+		        $('#layout .element').not('.wrapper').resizable({
+		            resize: function () {
+		                $(this).closest('.wrapper').width($(this).outerWidth()).height($(this).outerHeight());
+		            }
+		        });
+
+		        $('#layout :input').removeAttr("disabled");
+		        $('#layout label').replaceWith(function () {
+		            return $('<input type="text" />').val($(this).val()).data($(this).data());
+		        });
+
+		        //Reset Button 
+		        $("#reset").click(function () {
+		            $('#layout').children().remove();
+		            $("#layoutName").val("");
+		        });
+
+		        //Makes toolbox elements draggable
+		        $('#dropElements .element').draggable({ helper: 'clone', cancel: null });
+
+		        //default textboxes draggable and span fit
+		        //$("#companyInfo *").draggable({ containment: '#layout', cancel: null }).width($(this).children().outerWidth());
+
+		        $(document).keypress(function (event) {
+		            if (event.keyCode === 46) {
+		                $('#layout .ui-selected').remove();
+		            }
+		        });
+
+		        //Drop 
+		        $("#layout").selectable()
+					.droppable({
+					    accept: '#dropElements .element',
+					    drop: function (event, ui) {
+
+					        var e = ui.draggable.clone();
+					        eLeft = ui.offset.left;
+					        eTop = ui.offset.top;
+					        if (e.data('elementType') === 'table') {
+					            $('#table-form').dialog('open');
+					        } else {
+
+
+					            e.removeAttr("readonly");
+
+					            var wrapper = $('<div class="wrapper ui-selectee" />')
+								.draggable({ containment: '#layout' })
+								.appendTo('#layout');
+
+					            if (e.data('elementType') === 'boolean') {
+					                e.children('label').replaceWith('<input type="text"/>').css('float', 'right');
+					                wrapper.addClass('element').data('elementType', 'boolean').append(e.children());
+
+					            } else {
+					                wrapper.append(e);
+					            }
+
+					            wrapper.width(function () {
+					                var w = 0;
+					                $(this).children().each(function () {
+					                    w += $(this).outerWidth();
+					                });
+					                return w + 10;
+					            });
+
+					            var left = (eLeft - $(this).offset().left);
+
+					            var top = (eTop - $(this).offset().top);
+
+					            if (left < 0)
+					                left = 0; //left -= oleft;
+
+					            else if ((wrapper.outerWidth() + left) > $(this).outerWidth())
+					                left = ($(this).outerWidth() - wrapper.outerWidth()); //left -=
+
+					            if (top < 0)
+					                top = 0; //top -= otop;
+
+					            else if ((wrapper.outerHeight() + top) > $(this).outerHeight())
+					                top = ($(this).outerHeight() - wrapper.outerHeight()); //otop -= 
+
+					            //wrapper.left(left).top(top);
+
+					            wrapper.position({
+					                my: 'left top',
+					                at: 'left top',
+					                of: $(this),
+					                offset: left + " " + top
+					            }).makeAbsolute();
+
+					        }
+
+					        if (e.data('elementType') !== 'boolean') {
+					            //resizable
+					            e.resizable(
+								{
+								    minWidth: $(e).width(),
+								    minHeight: $(e).height(),
+								    resize: function () {
+								        $(wrapper).width($(this).outerWidth()).height($(this).outerHeight());
+								    }
+								});
+					        }
+					    }
+					});
+
+		    });
+
+		</script>
+	}
+}

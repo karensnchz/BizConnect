@@ -1,0 +1,8 @@
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp\bin\BizConnect.WebApp.dll
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp\bin\BizConnect.WebApp.pdb
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp\bin\EntityFramework.dll
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp\bin\BizConnect.Data.pdb
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp\obj\Debug\BizConnect.WebApp.dll
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp\obj\Debug\BizConnect.WebApp.pdb
+C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.WebApp\bin\BizConnect.Data.dll

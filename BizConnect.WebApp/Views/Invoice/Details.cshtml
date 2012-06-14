@@ -1,0 +1,15 @@
+﻿@model BizConnect.Data.Entities.Invoice
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Invoice</legend>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.InvoiceId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

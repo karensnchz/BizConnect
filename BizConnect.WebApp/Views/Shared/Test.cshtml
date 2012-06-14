@@ -1,0 +1,118 @@
+﻿@model BizConnect.Data.Entities.Layout
+@*<div class="editor-label">
+    @Html.LabelFor(model => model.Layout.Name)
+</div>
+<div class="editor-field">
+    <input id="layoutName" type="text" value="@(Model.Layout.Name ?? "")" @(editable ? "" : "readonly") />
+    @if (editable && Roles.IsUserInRole("Owner"))
+    {
+        <select id="companies">
+            @foreach (var company in Model.Companies)
+            {
+                <option data-company-id="@company.CompanyId" @(company.Equals(Model.Layout.Company) ? "selected" : "")>@company.Name</option>
+            }
+        </select>
+    }
+</div>
+<div id="message" />*@
+
+<fieldset>
+    <legend>Layout</legend>
+    @Html.ValidationSummary(true)
+    <div id="layout">
+        @*        <div id="companyInfo" class="ui-draggable">
+            <label id="companyName" />
+            <br />
+            <label id="companyAddress" />
+            <br />
+            <label id="companyPhone" />
+        </div>*@
+        
+        @if (Model.Elements != null)
+        {
+            foreach (var e in Model.Elements)
+            {
+                if (e.ElementType == "boolean")
+                {
+            <div class="wrapper element" data-element-id="@e.ElementId"  data-element-type="boolean" data-height="@e.Height" data-left="@e.XPosition" data-top="@e.YPosition" data-width="@e.Width">
+                <input name="@e.Name" type="checkbox" disabled=""/>
+                    <label for="@e.Name">@e.Name</label>
+            </div>
+                }
+                else if (e.ElementType == "table")
+                {
+            <table class="element wrapper" data-element-id="@e.ElementId" data-element-type="table" data-height="@e.Height" data-left="@e.XPosition" data-top="@e.YPosition" data-width="@e.Width">
+                <thead>
+                    <tr>
+                        @foreach (var c in e.Name.Split('♠'))
+                        {
+                            <th>
+                                <label>@c</label>
+                            </th> 
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int r = 0; r < e.Rows; r++)
+                    {
+                        <tr>
+                            @for (int c = 0; c < e.Columns; c++)
+                            { 
+                                <td>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+                }
+                else
+                {
+                    <div class="wrapper" data-height="@e.Height" data-left="@e.XPosition" data-top="@e.YPosition" data-width="@e.Width">
+                        <input class="element" type="text" value="@e.Name" data-element-type="@e.ElementType"  data-element-id="@e.ElementId" disabled=""/>
+                    </div>
+            
+                    
+                }
+            }
+        }
+    </div>
+</fieldset>
+<script src="@Url.Content("~/Scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+
+//    function refreshCompany() {
+//        var item = $('#companies :selected');
+//        $('#companyName').html(item.text());
+//        $('#companyPhone').html(item.data('phone'));
+//        $('#companyAddress').html(item.data('address'));
+//    }
+
+    $(function () {
+        $('table').dataTable({
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": false,
+            "bInfo": false,
+            "bAutoWidth": true
+        });
+
+        $('.wrapper').each(function () {
+            $(this).width($(this).data('width'));
+            $(this).height($(this).data('height'));
+            $(this).position({
+                my: 'left top',
+                at: 'left top',
+                of: $('#layout'),
+                offset: $(this).data('left') + " " + $(this).data('top')
+            }).makeAbsolute();
+        });
+
+        //        refreshCompany();
+        //        $('#companies').change(refreshCompany);
+
+
+    });
+    
+</script>

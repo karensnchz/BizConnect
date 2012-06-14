@@ -1,0 +1,50 @@
+﻿@model IEnumerable<BizConnect.Data.Entities.Invoice>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="index">
+    <thead>
+        <tr>
+            <th>Invoice #</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.InvoiceId
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.InvoiceId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.InvoiceId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.InvoiceId })
+            </td>
+        </tr>
+    }
+    </tbody>
+
+</table>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $('#index').dataTable({
+                "aoColumnDefs": [
+                    { "bSearchable": false, "aTargets": [1] },
+                    { "bSortable": false, "aTargets": [1] }
+                ],
+                "bRetrieve": true
+            });
+        });
+    </script>
+}

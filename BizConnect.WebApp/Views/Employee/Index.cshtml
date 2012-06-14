@@ -1,0 +1,77 @@
+﻿@model IEnumerable<BizConnect.Data.Entities.Employee>
+@{
+    ViewBag.Title = "Index";
+}
+<h2>
+    Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="index">
+    <thead>
+        <tr>
+            <th>
+                First name
+            </th>
+            <th>
+                Last name
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Phone
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.EmployeeId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $('#index').dataTable({
+                "aoColumnDefs": [{ "bSortable": false, "bSearchable": false, "aTargets": [6]}],
+                "bRetrieve": true
+            });
+        });
+    </script>
+}

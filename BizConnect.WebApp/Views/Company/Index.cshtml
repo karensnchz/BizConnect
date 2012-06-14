@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BizConnect.Data.Entities.Company>
+@{
+    ViewBag.Title = "Index";
+}
+<h2>
+    Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="index">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Phone
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CompanyId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CompanyId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CompanyId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $('#index').dataTable({
+                "aoColumnDefs": [
+                    { "bSearchable": false, "aTargets": [3] },
+                    { "bSortable": false, "aTargets": [3] }
+                ],
+                "bRetrieve": true
+            });
+        });
+    </script>
+}
