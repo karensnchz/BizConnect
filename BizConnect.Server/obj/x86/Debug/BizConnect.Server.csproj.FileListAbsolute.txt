@@ -1,6 +1,0 @@
-C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.Server\bin\Debug\BizConnect.Server.exe.config
-C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.Server\bin\Debug\BizConnect.Server.exe
-C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.Server\bin\Debug\BizConnect.Server.pdb
-C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.Server\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.Server\obj\x86\Debug\BizConnect.Server.exe
-C:\Users\ksanchez\Documents\Neumont\Quarter 7\PRO390\MobileEnabledMvcApp\BizConnect.Server\obj\x86\Debug\BizConnect.Server.pdb
