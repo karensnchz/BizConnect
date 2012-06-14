@@ -1,0 +1,16 @@
+﻿input[value*='Log On'], input[value*='Register'], a[href*='Create']
+{
+  background-color:#85A3ED;
+  border:none;
+  color:white;
+  font-weight:bold;
+  
+  -webkit-border-radius: 5px;
+  moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+input[value*='Log On']:hover, input[value*='Register']:hover, a[href*='Create']:hover
+{
+    background-color: #B74AED;       
+}

@@ -1,0 +1,76 @@
+﻿body 
+{
+    background-color: #535BBB;
+}
+
+#title
+{
+    
+}
+
+#title > h1
+{
+    
+}
+
+#menu
+{
+    
+}
+
+#menu > li
+{
+    
+}
+
+#menu > li > a
+{
+    
+}
+
+#logindisplay
+{
+    
+}
+
+#main
+{
+    
+}
+
+#main > h2
+{
+    text-align:center;
+}
+
+#main > div
+{
+    
+}
+
+#main > div > p
+{
+    text-align:center;
+}
+
+
+
+#main > div > p > a
+{
+  background-color: #85A3ED;
+  color:white;
+  display:inline-block;
+  font-size:18px;
+  padding:5px;
+  text-decoration:none;
+  width:100px;
+  
+  -webkit-border-radius: 5px;
+  moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#main > div > p > a:hover
+{
+    background-color: #B74AED;
+}

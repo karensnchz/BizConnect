@@ -80,6 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\BizConnectStyle.css" />
     <Content Include="Content\DataTables-1.9.1\docs\media\css\doc.css" />
     <Content Include="Content\DataTables-1.9.1\docs\media\css\shCore.css" />
     <Content Include="Content\DataTables-1.9.1\docs\media\css\shThemeDataTables.css" />

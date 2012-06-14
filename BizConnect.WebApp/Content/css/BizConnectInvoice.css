@@ -1,0 +1,30 @@
+﻿#index_wrapper
+{
+    
+}
+
+#index_length
+{
+    
+}
+
+#index_filter
+{
+    margin: 0 0 20px;
+}
+
+table#index
+{
+    
+}
+
+#index_paginate
+{
+    margin: 10px 0 0;
+}
+
+a[href*='Create']
+{
+    text-decoration: none;
+    padding: 5px;    
+}

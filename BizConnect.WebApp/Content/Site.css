@@ -126,9 +126,10 @@ footer,
 /* TAB MENU   
 ----------------------------------------------------------*/
 ul#menu {
-    border-bottom: 1px #5C87B2 solid;
-    padding: 0 0 2px;
-    position: relative;
+    /* border-bottom: 1px #5C87B2 solid; */
+    /* padding: 0 0 2px; */
+    border-bottom-color: #5C87B2;
+    /*position: relative; */
     margin: 0;
     text-align: right;
 }
@@ -151,16 +152,17 @@ ul#menu li a {
     font-weight: bold;
     text-decoration: none;
     line-height: 2.8em;
-    background-color: #e8eef4;
-    color: #034af3;
+    background-color: #fff; /* #e8eef4; */
+    color: #85A3ED; /*  #034af3; */
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
     -moz-border-radius: 4px 4px 0 0;
 }
 
 ul#menu li a:hover {
-    background-color: #fff;
+    background-color: #B74AED;
     text-decoration: none;
+    color: White;
 }
 
 ul#menu li a:active {
@@ -177,7 +179,7 @@ ul#menu li.selected a {
 ----------------------------------------------------------*/
 
 fieldset {
-    border: 1px solid #ddd;
+    border: 2px dashed #DDDDDD; /*  1px solid #ddd; */
     padding: 0 1.4em 1.4em 1.4em;
     margin: 0 0 1.5em 0;
 }
@@ -194,10 +196,15 @@ textarea {
 input[type="text"], 
 input[type="password"] {
     border: 1px solid #ccc;
-    padding: 2px;
+    padding: 3px; /* 2px; */
     font-size: 1.2em;
     color: #444;
     width: 200px;
+    background-color:#E7E3FD;
+    
+    -webkit-border-radius: 5px;
+    moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
 select {
